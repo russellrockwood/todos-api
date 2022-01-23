@@ -1,4 +1,5 @@
 require 'rails_helper'
+require "pry"
 
 RSpec.describe 'Todos API', type: :request do
   #initialize test data
@@ -25,7 +26,7 @@ RSpec.describe 'Todos API', type: :request do
      context 'when the record exists' do
        it "returns the todo" do
          expect(json).not_to be_empty
-         expect(json.id).to eq(todo_id)
+         expect(json['id']).to eq(todo_id)
        end
      end
 
@@ -41,7 +42,7 @@ RSpec.describe 'Todos API', type: :request do
        end
 
        it "returns a not found message" do
-         expect(response.body).to match(/Coulnd't find Todo/)
+         expect(JSON.parse(response.body)['message']).to match("Couldn't find Todo with 'id'=100")
        end
      end
    end
@@ -71,7 +72,7 @@ RSpec.describe 'Todos API', type: :request do
         end
 
         it "returns a validation failure message" do
-          expect(response.body).to match(/Validation failed: Created By can't be blank/)
+          expect(response.body).to match("{\"message\":\"Validation failed: Created by can't be blank\"}")
         end
       end
     end
