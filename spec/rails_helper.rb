@@ -42,6 +42,12 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+RSpec.configuration do |config|
+  
+  config.include RequestSpecHelper, type: :request
+
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
